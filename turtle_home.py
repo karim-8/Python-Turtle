@@ -37,6 +37,18 @@ ball.goto(0,0)
 ball.dx = 2.5 # ball speed To move diaognally 
 ball.dy = 2.5 # ball speed delta
 
+
+#Score
+score1 = 0
+score2 = 0
+score = turtle.Turtle()
+score.speed(0)
+score.color("white")
+score.penup()
+score.hideturtle()
+score.goto(0,250)
+score.write("Player 1: 0 Player 2: 0", align="center", font=("Courier",24,"normal"))
+
 #Function to move the paddle up "Increasing Y Axis"
 def movePaddleUp():
     y = paddle1.ycor() # Getting the  Y coordinates of the first paddle
@@ -74,7 +86,7 @@ while True:
     ball.sety(ball.ycor() + ball.dy) # Ball place in x then add 2.5 to the Y Axis
     
     #Top & Bottom Border Chek
-    if ball.ycor() > 290: # If ball is on the top border
+    if ball.ycor() >290: # If ball is on the top border
         ball.sety(290) # set y axis +290
         ball.dy *= -1 # Reverse to go reversed direction -2.5 instead of 2.5
         
@@ -82,11 +94,26 @@ while True:
         ball.sety(-290) # set y axis -290
         ball.dy *= -1 # Reverse to go reversed direction 2.5 instead of -2.5
             
-    if ball.xcor() > 390:   # if ball is right 
+    if ball.xcor() >390:   # if ball is right 
         ball.goto(0,0)  # Return ball to center
         ball.dx *= -1 # reverse the x direction
+        score1 +=1
+        score.clear()
+        score.write("Player 1: {} Player 2: {}".format(score1,score2), align="center", font=("Courier",24,"normal"))
+
         
-    if ball.xcor() < -390:    # if ball is left 
+    if ball.xcor() <-390:    # if ball is left 
         ball.goto(0,0) # Return ball to center
         ball.dx *= -1 # reverse the x direction
+        score2 +=1
+        score.clear()
+        score.write("Player 1: {} Player 2: {}".format(score1,score2), align="center", font=("Courier",24,"normal"))
         
+# Logic for ball hitting the paddles
+    if(ball.xcor() >340 and ball.xcor() < 350) and (ball.ycor() < paddle2.ycor() + 40 and ball.ycor() > paddle2.ycor() -40):
+       ball.setx(340)
+       ball.dx *= -1       
+   
+    if(ball.xcor() < -340 and ball.xcor() > 350) and (ball.ycor() < paddle1.ycor() + 40 and ball.ycor() > paddle1.ycor() -40):
+       ball.setx(-340)
+       ball.dx *= -1      
